@@ -1,0 +1,5 @@
+2026-10-20 12:00:01 process source_ip=192.168.1.20 username=user1 process=chrome.exe pid=2100
+2026-10-20 12:00:05 process source_ip=192.168.1.20 username=user1 process=explorer.exe pid=2200
+2026-10-20 12:00:10 process source_ip=192.168.1.20 username=user1 process=powershell.exe pid=2300
+2026-10-20 12:00:15 process source_ip=192.168.1.20 username=user1 process=notepad.exe pid=2400
+2026-10-20 12:00:20 process source_ip=192.168.1.20 username=user1 process=wscript.exe pid=2500

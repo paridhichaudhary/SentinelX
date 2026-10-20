@@ -1,0 +1,7 @@
+2026-10-20 10:00:01 LOGIN_SUCCESS username=paridhi source_ip=192.168.1.10
+2026-10-20 10:02:15 LOGIN_FAILED username=admin source_ip=192.168.1.50
+2026-10-20 10:02:30 LOGIN_FAILED username=admin source_ip=192.168.1.50
+2026-10-20 10:02:45 LOGIN_FAILED username=admin source_ip=192.168.1.50
+2026-10-20 10:03:00 LOGIN_FAILED username=admin source_ip=192.168.1.50
+2026-10-20 10:03:15 LOGIN_FAILED username=admin source_ip=192.168.1.50
+2026-10-20 10:04:10 LOGIN_SUCCESS username=admin source_ip=192.168.1.50

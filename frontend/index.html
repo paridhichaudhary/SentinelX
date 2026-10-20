@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SentinelX SOC Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+    <!-- ==========================================
+         HEADER
+         ========================================== -->
+
+    <header>
+
+        <div>
+
+            <h1>SentinelX</h1>
+
+            <p>
+                Mini-SIEM / Security Operations Center
+            </p>
+
+        </div>
+
+
+        <div class="connection">
+
+            <span class="status-dot"></span>
+
+            API Connected
+
+        </div>
+
+    </header>
+
+
+    <!-- ==========================================
+         MAIN
+         ========================================== -->
+
+    <main>
+
+
+        <!-- ==========================================
+             SUMMARY CARDS
+             ========================================== -->
+
+        <section class="summary">
+
+            <div class="card">
+
+                <h3>Total Alerts</h3>
+
+                <p id="totalAlerts">0</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>High Severity</h3>
+
+                <p id="highAlerts">0</p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>New Alerts</h3>
+
+                <p id="newAlerts">0</p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             ALERTS PANEL
+             ========================================== -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <h2>Security Alerts</h2>
+
+
+                <button
+                    class="refresh-button"
+                    onclick="refreshDashboard()"
+                >
+                    Refresh
+                </button>
+
+            </div>
+
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Alert ID</th>
+
+                            <th>Type</th>
+
+                            <th>Severity</th>
+
+                            <th>Source IP</th>
+
+                            <th>Status</th>
+
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="alertTableBody">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==========================================
+             INVESTIGATION PANEL
+             ========================================== -->
+
+        <section
+            class="panel investigation"
+            id="investigationPanel"
+            style="display: none;"
+        >
+
+            <div class="panel-header">
+
+                <h2>
+                    Alert Investigation
+                </h2>
+
+            </div>
+
+
+            <!-- ALERT DETAILS -->
+
+            <div class="investigation-grid">
+
+
+                <div class="detail">
+
+                    <span>Alert ID</span>
+
+                    <strong
+                        id="investigationAlertId"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Alert Type</span>
+
+                    <strong
+                        id="investigationType"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Severity</span>
+
+                    <strong
+                        id="investigationSeverity"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Source IP</span>
+
+                    <strong
+                        id="investigationIP"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Username</span>
+
+                    <strong
+                        id="investigationUser"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>Failed Attempts</span>
+
+                    <strong
+                        id="investigationAttempts"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span>MITRE ATT&CK</span>
+
+                    <strong
+                        id="investigationMITRE"
+                    >
+                        -
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="description-box">
+
+                <h3>
+                    Alert Description
+                </h3>
+
+                <p
+                    id="investigationDescription"
+                >
+                    -
+                </p>
+
+            </div>
+
+
+
+            <!-- STATUS -->
+
+            <div class="status-section">
+
+                <h3>
+                    Alert Status
+                </h3>
+
+
+                <select id="alertStatus">
+
+                    <option value="NEW">
+                        NEW
+                    </option>
+
+                    <option value="INVESTIGATING">
+                        INVESTIGATING
+                    </option>
+
+                    <option value="RESOLVED">
+                        RESOLVED
+                    </option>
+
+                </select>
+
+
+                <button
+                    class="update-button"
+                    onclick="updateStatus()"
+                >
+                    Update Status
+                </button>
+
+
+                <p id="statusMessage"></p>
+
+            </div>
+
+
+
+            <!-- INVESTIGATION CASE -->
+
+            <div class="case-section">
+
+                <h3>
+                    Investigation Case
+                </h3>
+
+
+                <label for="analystName">
+                    Analyst Name
+                </label>
+
+                <input
+                    type="text"
+                    id="analystName"
+                    placeholder="Enter analyst name"
+                >
+
+
+                <label for="investigationNotes">
+                    Investigation Notes
+                </label>
+
+                <textarea
+                    id="investigationNotes"
+                    rows="5"
+                    placeholder="Describe what you found during investigation..."
+                ></textarea>
+
+
+                <label for="investigationAction">
+                    Analyst Action
+                </label>
+
+                <textarea
+                    id="investigationAction"
+                    rows="4"
+                    placeholder="Describe the action taken..."
+                ></textarea>
+
+
+                <button
+                    class="update-button"
+                    onclick="saveInvestigation()"
+                >
+                    Save Investigation
+                </button>
+
+
+                <p id="caseMessage"></p>
+
+            </div>
+
+
+
+            <!-- INCIDENT REPORT -->
+
+            <div class="case-section">
+
+                <h3>
+                    Incident Report
+                </h3>
+
+
+                <p>
+                    Generate a structured incident report
+                    containing alert details, investigation
+                    information and MITRE ATT&CK mapping.
+                </p>
+
+
+                <button
+                    class="update-button"
+                    onclick="generateIncidentReport()"
+                >
+                    Generate Incident Report
+                </button>
+
+
+                <p id="reportMessage"></p>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==========================================
+         JAVASCRIPT
+         ========================================== -->
+
+    <script
+        src="script.js"
+    ></script>
+
+
+</body>
+
+</html>
